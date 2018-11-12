@@ -6,7 +6,7 @@ import config from "./config/firebase-config";
 
 firebase.initializeApp(config);
 
-const firestore = firebase.firestore();
-firestore.settings({ timestampsInSnapshots: true });
+const db = firebase.firestore();
+db.settings({ timestampsInSnapshots: true });
 
-export { firestore };
+export { db };
