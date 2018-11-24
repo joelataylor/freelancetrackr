@@ -1,12 +1,12 @@
-import firebase from "firebase";
-import "firebase/firestore";
-import "firebase/auth";
+import firebase from 'firebase'
+import 'firebase/firestore'
+import 'firebase/auth'
 
-import config from "./config/firebase-config";
+import config from './config/firebase-config'
 
-firebase.initializeApp(config);
+firebase.initializeApp(config)
 
-const db = firebase.firestore();
-db.settings({ timestampsInSnapshots: true });
+const db = firebase.firestore()
+db.settings({ timestampsInSnapshots: true })
 
-export { db };
+export { db }

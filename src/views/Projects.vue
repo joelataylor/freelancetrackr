@@ -1,8 +1,8 @@
 <template>
   <div>
-    <Header title="Dashboard" />
+    <Header title="Projects" />
 
-    <h1> This is the dashboard </h1>
+    <h1> This is the projects </h1>
   </div>
 </template>
 
@@ -10,7 +10,7 @@
 import Header from '@/components/Header'
 
 export default {
-  name: 'Dashboard',
+  name: 'Projects',
 
   data: function() {
     return {}

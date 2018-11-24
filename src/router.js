@@ -1,60 +1,92 @@
-import Vue from "vue";
-import Router from "vue-router";
-import auth from "@/auth";
+import Vue from 'vue'
+import Router from 'vue-router'
+import auth from '@/auth'
 
-import Home from "@/views/Home";
-import Auth from "@/views/Auth";
-import Dashboard from "@/views/Dashboard";
+import Home from '@/views/Home'
+import SignIn from '@/views/SignIn'
+import SignUp from '@/views/SignUp'
+import Dashboard from '@/views/Dashboard'
+import Projects from '@/views/Projects'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const router = new Router({
-  mode: "history",
+  mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: "/",
-      name: "home",
+      path: '/',
+      name: 'home',
       component: Home
     },
     {
-      path: "/auth",
-      name: "auth",
-      component: Auth
+      path: '/signin',
+      name: 'signin',
+      component: SignIn
     },
     {
-      path: "/dashboard",
-      name: "dashboard",
-      component: Dashboard,
+      path: '/signup',
+      name: 'signup',
+      component: SignUp,
       meta: { requireAuth: true }
     },
     {
-      path: "/about",
-      name: "about",
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/About.vue")
+      path: '/dashboard',
+      name: 'dashboard',
+      component: Dashboard,
+      meta: { requireBusiness: true }
     },
     {
-      path: "*",
-      redirect: "/"
+      path: '/projects',
+      name: 'projects',
+      component: Projects,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/about',
+      name: 'about',
+      component: () =>
+        import(/* webpackChunkName: "about" */ './views/About.vue')
+    },
+    {
+      path: '*',
+      redirect: '/'
     }
   ]
-});
+})
 
-router.beforeEach((to, from, next) => {
-  let currentUser = auth.user();
-  let requireAuth = to.matched.some(record => record.meta.requireAuth);
+router.beforeEach(async (to, from, next) => {
+  let business = null
+  let user = null
 
-  if (requireAuth && !currentUser) {
-    next("auth");
-  } else if (to.name === "auth" && currentUser) {
-    next("dashboard");
-  } else {
-    next();
+  await auth.getCurrentUser().then(currentUser => {
+    user = currentUser
+  })
+
+  if (user) {
+    await auth.getBusiness(user).then(biz => {
+      business = biz
+    })
   }
-});
 
-export default router;
+  let requireAuth = to.matched.some(record => record.meta.requireAuth)
+  let requireBusiness = to.matched.some(record => record.meta.requireBusiness)
+
+  console.log('User: ', user, 'Biz: ', business)
+
+  if (requireAuth && !user) {
+    next('signin')
+  } else if (requireBusiness && !business) {
+    next('signup')
+  } else if (
+    (to.name === 'signin' || to.name === 'signup') &&
+    user &&
+    business
+  ) {
+    next('dashboard')
+  } else {
+    next()
+  }
+})
+
+export default router

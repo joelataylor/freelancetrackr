@@ -1,33 +1,41 @@
-import auth from "@/auth";
+import auth from '@/auth'
 
 const state = {
   user: null,
   business: null
-};
+}
 
 const getters = {
   user: state => state.user,
   isLoggedIn: state => state.user !== null,
   business: state => state.business
-};
+}
 
 const mutations = {
   setUser: (state, user) => {
-    state.user = user;
+    state.user = user
   },
   setBusiness: (state, business) => {
-    state.business = business;
+    state.business = business
+  },
+  logUserOut: state => {
+    auth.logout()
+    state.user = null
+    state.business = null
   }
-};
+}
 
 const actions = {
-  setCurrentUser: ({ commit }) => {
-    commit("setUser", auth.user());
+  setCurrentUser: ({ commit }, user) => {
+    commit('setUser', user)
   },
   setCurrentBusiness: ({ commit }, business) => {
-    commit("setBusiness", business);
+    commit('setBusiness', business)
+  },
+  logUserOut: ({ commit }) => {
+    commit('logUserOut')
   }
-};
+}
 
 export default {
   namespaced: true,
@@ -35,4 +43,4 @@ export default {
   getters,
   mutations,
   actions
-};
+}

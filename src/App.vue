@@ -1,30 +1,29 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link> | 
-      <router-link to="/auth">Login</router-link>
+  <div class="font-sans font-normal text-black leading-normal">
+    <div class="flex">
+      <div class="w-64 bg-black min-h-screen relative">
+        <Nav />
+      </div>
+
+      <div class="w-full bg-grey-lighter" id="app">
+        <router-view/>
+      </div>
     </div>
-    <router-view/>
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
+<script>
+import Nav from '@/components/Nav.vue'
+
+export default {
+  name: 'App',
+
+  components: {
+    Nav
   }
 }
+</script>
+
+<style>
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,400i,600,600i,700,700i');
 </style>
