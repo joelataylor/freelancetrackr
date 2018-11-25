@@ -2,6 +2,9 @@
 node_modules
 /dist
 
+data/*keys.json
+src/config/firebase-config.js
+
 /tests/e2e/videos/
 /tests/e2e/screenshots/
 
@@ -22,3 +25,4 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw*
+data/keys.json

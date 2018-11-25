@@ -62,6 +62,7 @@ export default {
             .set(business)
             .then(() => {
               this.$store.dispatch('user/setCurrentBusiness', business)
+              this.$router.push('dashboard')
             })
             .catch(error => {
               console.log(

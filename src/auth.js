@@ -30,12 +30,7 @@ const auth = {
     })
   },
 
-  // user() {
-  //   console.log('Auth context: ', this.context)
-  //   return firebase.auth().currentUser
-  // },
-
-  getBusiness(user) {
+  getCurrentBusiness(user) {
     return db
       .collection('accounts')
       .where('owner_id', '==', user.uid)
@@ -45,7 +40,6 @@ const auth = {
         querySnapshot.forEach(doc => {
           business = doc.data()
           business.id = doc.id
-          console.log('BUSI: ', business)
           this.context.$store.dispatch('user/setCurrentBusiness', business)
         })
         return business

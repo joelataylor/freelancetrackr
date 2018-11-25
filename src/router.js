@@ -64,15 +64,13 @@ router.beforeEach(async (to, from, next) => {
   })
 
   if (user) {
-    await auth.getBusiness(user).then(biz => {
+    await auth.getCurrentBusiness(user).then(biz => {
       business = biz
     })
   }
 
   let requireAuth = to.matched.some(record => record.meta.requireAuth)
   let requireBusiness = to.matched.some(record => record.meta.requireBusiness)
-
-  console.log('User: ', user, 'Biz: ', business)
 
   if (requireAuth && !user) {
     next('signin')
