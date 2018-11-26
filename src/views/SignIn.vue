@@ -30,6 +30,9 @@ let uiConfig = {
       customParameters: {
         prompt: 'select_account'
       }
+    },
+    {
+      provider: firebase.auth.GithubAuthProvider.PROVIDER_ID
     }
   ]
 }
@@ -58,7 +61,10 @@ export default {
   padding: 2rem;
   max-width: 100%;
 }
-.firebaseui-idp-button:hover {
-  background-color: config('colors.grey-lighter');
+.firebaseui-idp-google:hover {
+  background-color: config('colors.grey-light');
+}
+.firebaseui-idp-github:hover {
+  background-color: config('colors.grey-darkest');
 }
 </style>

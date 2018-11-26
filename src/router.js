@@ -7,6 +7,8 @@ import SignIn from '@/views/SignIn'
 import SignUp from '@/views/SignUp'
 import Dashboard from '@/views/Dashboard'
 import Projects from '@/views/Projects'
+import Clients from '@/views/Clients'
+import ClientProfile from '@/views/ClientProfile'
 
 Vue.use(Router)
 
@@ -41,6 +43,24 @@ const router = new Router({
       name: 'projects',
       component: Projects,
       meta: { requireBusiness: true }
+    },
+    {
+      path: '/clients/:id',
+      name: 'clientsProfile',
+      component: ClientProfile,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/clients',
+      name: 'clients',
+      component: Clients,
+      meta: { requireBusiness: true },
+      children: [
+        {
+          path: 'nonactive',
+          component: Clients
+        }
+      ]
     },
     {
       path: '/about',

@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-import { db } from '@/firebase'
+import { firestore } from '@/firebase'
 
 const auth = {
   context: null,
@@ -31,7 +31,7 @@ const auth = {
   },
 
   getCurrentBusiness(user) {
-    return db
+    return firestore
       .collection('accounts')
       .where('owner_id', '==', user.uid)
       .get()

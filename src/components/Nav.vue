@@ -29,6 +29,14 @@
         <span class="inline-block w-6 ml-4 mr-2 text-center"><font-awesome-icon :icon="reportsIcon" /></span> Reports
       </router-link>
     </div>
+    <div v-else-if="user">
+      <router-link to="/" class="block py-3 mt-8 text-sm text-grey hover:text-white">
+        <span class="inline-block w-6 ml-4 mr-2 text-center"><font-awesome-icon :icon="homeIcon" /></span> Home
+      </router-link>
+      <a href="" @click="logout" class="block py-3 text-sm text-grey hover:text-white">
+        <span class="inline-block w-6 ml-4 mr-2 text-center"><font-awesome-icon :icon="signOutIcon" /></span> Sign Out
+      </a>
+    </div>
     <div v-else>
       <router-link to="/" class="block py-3 mt-8 text-sm text-grey hover:text-white">
         <span class="inline-block w-6 ml-4 mr-2 text-center"><font-awesome-icon :icon="homeIcon" /></span> Home
@@ -57,7 +65,8 @@ import {
   faWallet,
   faChartLine,
   faNetworkWired,
-  faBoxOpen
+  faBoxOpen,
+  faSignOutAlt
 } from '@fortawesome/free-solid-svg-icons'
 
 export default {
@@ -75,7 +84,8 @@ export default {
       clientsIcon: faUserTie,
       servicesIcon: faBoxOpen,
       purchasesIcon: faWallet,
-      reportsIcon: faChartLine
+      reportsIcon: faChartLine,
+      signOutIcon: faSignOutAlt
     }
   },
 
@@ -85,6 +95,12 @@ export default {
     },
     business() {
       return this.$store.getters['user/business']
+    }
+  },
+
+  methods: {
+    logout() {
+      this.$store.dispatch('user/logUserOut')
     }
   },
 
@@ -99,7 +115,7 @@ export default {
   width: 2rem;
   height: 2rem;
 }
-.router-link-exact-active {
+.router-link-active {
   @apply .bg-blacker .border-blue .border-l-2;
 }
 </style>

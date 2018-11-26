@@ -1,12 +1,16 @@
+import Vue from 'vue'
 import firebase from 'firebase'
 import 'firebase/firestore'
 import 'firebase/auth'
+import VueFirestore from 'vue-firestore'
 
 import config from './config/firebase-config'
 
 firebase.initializeApp(config)
 
-const db = firebase.firestore()
-db.settings({ timestampsInSnapshots: true })
+Vue.use(VueFirestore)
 
-export { db }
+const firestore = firebase.firestore()
+firestore.settings({ timestampsInSnapshots: true })
+
+export { firestore }
