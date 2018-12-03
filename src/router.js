@@ -9,6 +9,8 @@ import Dashboard from '@/views/Dashboard'
 import Projects from '@/views/Projects'
 import Clients from '@/views/Clients'
 import ClientProfile from '@/views/ClientProfile'
+import ClientEdit from '@/views/ClientEdit'
+import ClientNew from '@/views/ClientNew'
 
 Vue.use(Router)
 
@@ -45,8 +47,20 @@ const router = new Router({
       meta: { requireBusiness: true }
     },
     {
+      path: '/clients/new',
+      name: 'clientNew',
+      component: ClientNew,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/clients/:id/edit',
+      name: 'clientEdit',
+      component: ClientEdit,
+      meta: { requireBusiness: true }
+    },
+    {
       path: '/clients/:id',
-      name: 'clientsProfile',
+      name: 'clientProfile',
       component: ClientProfile,
       meta: { requireBusiness: true }
     },
@@ -54,13 +68,7 @@ const router = new Router({
       path: '/clients',
       name: 'clients',
       component: Clients,
-      meta: { requireBusiness: true },
-      children: [
-        {
-          path: 'nonactive',
-          component: Clients
-        }
-      ]
+      meta: { requireBusiness: true }
     },
     {
       path: '/about',

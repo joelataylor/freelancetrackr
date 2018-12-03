@@ -17,9 +17,12 @@
     "@fortawesome/vue-fontawesome": "^0.1.2",
     "firebase": "^5.5.8",
     "firebaseui": "^3.4.1",
+    "lodash": "^4.17.11",
+    "v-toaster": "^1.0.3",
     "vue": "^2.5.17",
     "vue-firestore": "^0.3.1",
     "vue-router": "^3.0.1",
+    "vue2-animate": "^2.1.0",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

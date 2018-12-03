@@ -5,9 +5,14 @@ import router from './router'
 import store from './store'
 import auth from '@/auth'
 
+import Toaster from 'v-toaster'
+
+import 'v-toaster/dist/v-toaster.css'
 import '@/styles/main.scss'
 
 Vue.config.productionTip = false
+
+Vue.use(Toaster, { timeout: 2500 })
 
 new Vue({
   router,
