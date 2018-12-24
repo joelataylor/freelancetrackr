@@ -13,7 +13,7 @@ a {
   transition: all 0.25s;
 }
 
-.router-link-exact-active {
+.main-content .router-link-exact-active {
   @apply .border-blue .border-b-2 .text-black;
 }
 
@@ -21,16 +21,21 @@ a {
   @apply .text-black;
 
   &:hover {
-    @apply .text-grey-darkest;
+    @apply .text-blue;
   }
 }
 
 .btn {
-  @apply .text-sm .font-semibold .py-2 .px-4 .rounded .shadow-md;
+  @apply .text-sm .font-semibold .py-1 .px-4 .rounded .shadow-md;
 
   &:hover {
     @apply .shadow-none;
   }
+}
+
+.btn-big {
+  @extend .btn;
+  @apply .py-4;  
 }
 
 .btn-blue {
@@ -65,11 +70,15 @@ a {
 }
 
 .input {
-  @apply .border .rounded .w-1/3 .p-2;
+  @apply .border .rounded .p-2;
 
   &:focus {
     @apply .border-blue;
   }
+}
+
+.select {
+  @apply .inline-block .appearance-none .w-32 .border .py-2 .px-2 .pr-8 .rounded;
 }
 
 @tailwind utilities;

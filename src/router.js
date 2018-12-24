@@ -6,11 +6,18 @@ import Home from '@/views/Home'
 import SignIn from '@/views/SignIn'
 import SignUp from '@/views/SignUp'
 import Dashboard from '@/views/Dashboard'
-import Projects from '@/views/Projects'
-import Clients from '@/views/Clients'
-import ClientProfile from '@/views/ClientProfile'
-import ClientEdit from '@/views/ClientEdit'
-import ClientNew from '@/views/ClientNew'
+
+import Projects from '@/views/projects/Projects'
+import ProjectNew from '@/views/projects/ProjectNew'
+import ProjectEdit from '@/views/projects/ProjectEdit'
+
+import Clients from '@/views/clients/Clients'
+import ClientProfile from '@/views/clients/ClientProfile'
+import ClientEdit from '@/views/clients/ClientEdit'
+import ClientNew from '@/views/clients/ClientNew'
+
+import Services from '@/views/services/Services'
+import ServiceNew from '@/views/services/Service'
 
 Vue.use(Router)
 
@@ -41,6 +48,18 @@ const router = new Router({
       meta: { requireBusiness: true }
     },
     {
+      path: '/projects/new',
+      name: 'projectNew',
+      component: ProjectNew,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/projects/:id/edit',
+      name: 'projectEdit',
+      component: ProjectEdit,
+      meta: { requireBusiness: true }
+    },
+    {
       path: '/projects',
       name: 'projects',
       component: Projects,
@@ -68,6 +87,24 @@ const router = new Router({
       path: '/clients',
       name: 'clients',
       component: Clients,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/services/:id',
+      name: 'serviceNew',
+      component: ServiceNew,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/services/new',
+      name: 'serviceNew',
+      component: ServiceNew,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/services',
+      name: 'services',
+      component: Services,
       meta: { requireBusiness: true }
     },
     {

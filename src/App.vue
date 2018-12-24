@@ -1,11 +1,11 @@
 <template>
   <div class="font-sans font-normal text-black leading-normal">
     <div class="flex">
-      <div class="w-64 bg-black min-h-screen relative">
-        <Nav />
+      <div class="main-nav w-64 bg-black min-h-screen relative">
+        <Nav/>
       </div>
 
-      <div class="w-full bg-grey-lighter" id="app">
+      <div class="main-content w-full bg-grey-lighter" id="app">
         <router-view/>
       </div>
     </div>

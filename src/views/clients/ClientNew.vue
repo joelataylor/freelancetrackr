@@ -41,9 +41,6 @@
 </template>
 
 <script>
-import _ from 'lodash'
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPencilAlt } from '@fortawesome/free-solid-svg-icons'
 import { firestore } from '@/firebase'
 import Header from '@/components/Header'
 import TextInput from '@/components/TextInput'
@@ -70,8 +67,7 @@ export default {
           email: '',
           mobile: ''
         }
-      },
-      editIcon: faPencilAlt
+      }
     }
   },
 
@@ -86,7 +82,6 @@ export default {
 
   components: {
     Header,
-    FontAwesomeIcon,
     TextInput
   },
 
@@ -97,7 +92,7 @@ export default {
         .doc(this.business.id)
         .collection('clients')
         .add(this.client)
-        .then(newClient => {
+        .then(() => {
           this.$toaster.success('A new client has been created!')
           this.$router.push('/clients')
         })
