@@ -22,9 +22,9 @@
 
           <h3 class="font-semibold border-b mb-4">Details:</h3>
           <div class="mb-8">
-            <text-input v-model="service.name">Service Name</text-input>
-            <text-input v-model="service.price" size="small" placeholder="125.00">Price ($)</text-input>
-            <select-input v-model="service.per" :options="options">Per</select-input>
+            <text-input v-model="service.name" class="mb-2">Service Name</text-input>
+            <text-input v-model="service.price" size="small" placeholder="125.00" class="mb-2">Price ($)</text-input>
+            <select-input v-model="service.per" :options="options" class="mb-2">Per</select-input>
           </div>
 
           <div class="mb-8 ml-32">

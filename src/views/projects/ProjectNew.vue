@@ -4,33 +4,19 @@
 
     <section class="bg-white m-6 p-6">
       <div>
-        <h1 class="font-semibold mb-6 text-center">Let's get your new project details</h1>
+        <h1 class="font-semibold mb-6">Let's get your new project details</h1>
 
         <div class>
           <h3 class="font-semibold border-b mb-4">Details:</h3>
-          <div class="mb-8 text-center">
-            <text-input v-model="project.name">Project Name</text-input>
-            <text-input v-model="project.client_id">Client</text-input>
-            <text-input v-model="project.start_date">Start Date</text-input>
-            <text-input v-model="project.completed_date">Completed Date</text-input>
+          <div class="mb-8">
+            <select-input v-model="clientId" :options="clients" class="mb-2">Client</select-input>
+            <text-input v-model="project.name" size="full" class="mb-2">Project Name</text-input>
+            <date-input v-model="project.start_date" class="mb-2">Start Date</date-input>
           </div>
 
-          <h3 class="font-semibold border-b mb-4">Totals:</h3>
-          <div class="mb-8 text-center">
-            <text-input v-model="project.tax">Tax</text-input>
-            <text-input v-model="project.discount">Discount</text-input>
-            <p>Subtotal: ${{project.subtotal}}</p>
-            <p>Total: ${{project.total}}</p>
-          </div>
-
-          <h3 class="font-semibold border-b mb-4">Items:</h3>
-          <div class="mb-8 text-center">
-            
-          </div>
-
-          <div class="mb-8 text-center">
+          <div class="mb-8">
             <router-link :to="{ name: 'projects' }" class="mr-6 text-black hover:text-red">Cancel</router-link>
-            <button class="btn-blue mr-3" @click="createProject()">Create Project</button>
+            <button class="btn-blue btn-big mr-3" @click="createProject()">Create Project</button>
           </div>
         </div>
       </div>
@@ -42,6 +28,8 @@
 import { firestore } from '@/firebase'
 import Header from '@/components/Header'
 import TextInput from '@/components/TextInput'
+import SelectInput from '@/components/SelectInput'
+import DateInput from '@/components/DateInput'
 
 export default {
   name: 'ProjectNew',
@@ -50,24 +38,31 @@ export default {
     return {
       project: {
         name: '',
-        client_id: '',
-        start_date: '',
-        completed_date: '',
+        client: {
+          id: '',
+          name: ''
+        },
+        start_date: new Date(),
+        completed_date: null,
         active: true,
         subtotal: 0,
         tax: 0,
         discount: 0,
         total: 0,
         items: [],
-        invoices: [],
+        invoice: {},
         payments: []
-      }
+      },
+      clients: [],
+      clientId: null
     }
   },
 
   components: {
     Header,
-    TextInput
+    TextInput,
+    SelectInput,
+    DateInput
   },
 
   computed: {
@@ -79,6 +74,25 @@ export default {
     }
   },
 
+  watch: {
+    clientId: function() {
+      // Add Client name to the `client` object
+      const client = this.clients.find(itm => {
+        return itm['.key'] == this.clientId
+      })
+      this.project.client.id = this.clientId
+      this.project.client.name = client.name
+    }
+  },
+
+  mounted: function() {
+    var clientsRef = firestore
+      .collection('accounts')
+      .doc(this.business.id)
+      .collection('clients')
+    this.$binding('clients', clientsRef.where('active', '==', true))
+  },
+
   methods: {
     createProject: function() {
       firestore
@@ -87,8 +101,9 @@ export default {
         .collection('projects')
         .add(this.project)
         .then(project => {
+          console.log(project)
           this.$toaster.success('Your new project has been created!')
-          this.$router.push(`/projects/${project['.key']}`)
+          this.$router.push(`/projects/${project.id}/edit`)
         })
     }
   }

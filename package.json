@@ -15,14 +15,17 @@
     "@fortawesome/free-regular-svg-icons": "^5.5.0",
     "@fortawesome/free-solid-svg-icons": "^5.5.0",
     "@fortawesome/vue-fontawesome": "^0.1.2",
+    "cuid": "^2.1.4",
     "firebase": "^5.5.8",
     "firebaseui": "^3.4.1",
     "lodash": "^4.17.11",
+    "moment": "^2.23.0",
     "v-toaster": "^1.0.3",
     "vue": "^2.5.17",
     "vue-firestore": "^0.3.1",
     "vue-router": "^3.0.1",
     "vue2-animate": "^2.1.0",
+    "vuejs-datepicker": "^1.5.4",
     "vuex": "^3.0.1"
   },
   "devDependencies": {

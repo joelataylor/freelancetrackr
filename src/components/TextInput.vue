@@ -1,36 +1,46 @@
 <template>
-  <p class="mb-2">
-    <label class="label">
+  <p :class="pStyles">
+    <label v-if="$slots.default" class="label">
       <slot/>
     </label>
+    {{prefix}}
     <input
       type="text"
-      v-bind:value="value"
-      v-on:input="$emit('input', $event.target.value)"
-      v-bind:class="className"
-      v-bind:placeholder="placeholder"
+      :value="value"
+      @input="$emit('input', $event.target.value)"
+      @keyup.enter="$emit('submit')"
+      :class="iStyles"
+      :placeholder="placeholder"
     >
+    {{suffix}}
   </p>
 </template>
 
 <script>
 export default {
   name: 'TextInput',
-  props: ['value', 'size', 'placeholder'],
+  props: ['value', 'size', 'placeholder', 'prefix', 'suffix'],
   computed: {
-    className: function() {
-      return this.size == 'small' ? 'input input-small' : 'input'
+    iStyles: function() {
+      switch (this.size) {
+        case 'tiny':
+          return 'input w-16'
+
+        case 'small':
+          return 'input'
+
+        case 'full':
+          return 'input flex-1'
+
+        default:
+          return 'input'
+      }
+    },
+    pStyles: function() {
+      return this.$slots.default
+        ? 'flex items-center'
+        : 'flex items-center mr-2'
     }
   }
 }
 </script>
-
-<style lang="scss" scoped>
-.input {
-  @apply .w-1/3;
-}
-
-.input-small {
-  @apply .w-32;
-}
-</style>

@@ -18,7 +18,7 @@
     </section>
 
     <section class="bg-white m-6 p-6">
-      <table class="w-full text-left table-collapse">
+      <table v-if="!loading" class="w-full text-left table-collapse">
         <thead>
           <tr>
             <th class="text-sm font-semibold text-grey-darker p-2 bg-grey-lightest">Client</th>
@@ -29,20 +29,29 @@
           </tr>
         </thead>
         <tbody class="align-baseline">
-          <tr class="hover:bg-grey-light">
-            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">Symposia Labs</td>
-            <td
-              class="p-2 border-t border-grey-light text-xs whitespace-no-wrap"
-            >Misc tasks for November 2019</td>
-            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">Nov 1st, 2018</td>
-            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">$2,340.00</td>
+          <tr class="hover:bg-grey-lightest" v-for="project in projects" :key="project['.key']">
             <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
-              <a href class="text-grey-dark hover:text-blue mr-3">
+              {{project.client.name}}
+            </td>
+            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
+              {{project.name}}
+            </td>
+            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
+              {{project.start_date | formatDate}}
+            </td>
+            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
+              {{project.total | formatMoney}}
+            </td>
+            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
+              <router-link
+                :to="{ name: 'projectEdit', params: { id: project['.key'] } }"
+                class="text-grey-dark hover:text-blue mr-3"
+              >
                 <span class="inline-block mr-1 text-center">
                   <font-awesome-icon :icon="editIcon"/>
                 </span> Edit
-              </a>
-              <a href class="text-grey-dark hover:text-red mr-3">
+              </router-link>
+              <a href @click="deleteProject(project)" class="text-grey-dark hover:text-red mr-3">
                 <span class="inline-block mr-1 text-center">
                   <font-awesome-icon :icon="deleteIcon"/>
                 </span> Delete
@@ -56,6 +65,7 @@
 </template>
 
 <script>
+import { firestore } from '@/firebase'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faPlus, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
 
@@ -64,11 +74,36 @@ import Header from '@/components/Header'
 export default {
   name: 'Projects',
 
+  components: {
+    Header,
+    FontAwesomeIcon
+  },
+
   data: function() {
     return {
       newIcon: faPlus,
       deleteIcon: faTrash,
-      editIcon: faPencilAlt
+      editIcon: faPencilAlt,
+      loading: true,
+      projects: []
+    }
+  },
+
+  firestore() {
+    return {
+      projects: {
+        ref: firestore
+          .collection('accounts')
+          .doc(this.business.id)
+          .collection('projects'),
+        resolve: data => {
+          this.projects = data
+          this.loading = false
+        },
+        reject: err => {
+          console.log('WE ERR: ', err)
+        }
+      }
     }
   },
 
@@ -81,9 +116,10 @@ export default {
     }
   },
 
-  components: {
-    Header,
-    FontAwesomeIcon
+  methods: {
+    deleteProject: function(project) {
+      console.log('DELETE PROJECT', project)
+    }
   }
 }
 </script>
