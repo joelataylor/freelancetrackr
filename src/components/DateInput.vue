@@ -9,16 +9,12 @@
 
 <script>
 import moment from 'moment'
+import _ from 'lodash'
 import Datepicker from 'vuejs-datepicker'
 
 export default {
   name: 'DateInput',
-  props: {
-    value: {
-      type: [Date, String, Object],
-      required: true
-    }
-  },
+  props: ['value'],
   components: {
     Datepicker
   },
@@ -30,8 +26,11 @@ export default {
   computed: {
     localDate: {
       get() {
-        if (this.value.seconds) {
+        if (_.isObject(this.value) && this.value.seconds) {
           return moment.unix(this.value.seconds).toDate()
+        }
+        if (!this.value) {
+          return ''
         }
         const newDate = moment(this.value).toDate()
         return newDate

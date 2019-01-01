@@ -10,6 +10,7 @@ import Dashboard from '@/views/Dashboard'
 import Projects from '@/views/projects/Projects'
 import ProjectNew from '@/views/projects/ProjectNew'
 import ProjectEdit from '@/views/projects/ProjectEdit'
+import ProjectInvoice from '@/views/projects/ProjectInvoice'
 
 import Clients from '@/views/clients/Clients'
 import ClientProfile from '@/views/clients/ClientProfile'
@@ -63,6 +64,12 @@ const router = new Router({
       path: '/projects',
       name: 'projects',
       component: Projects,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/project/:id/invoice',
+      name: 'projectInvoice',
+      component: ProjectInvoice,
       meta: { requireBusiness: true }
     },
     {

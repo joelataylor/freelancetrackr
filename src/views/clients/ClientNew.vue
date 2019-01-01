@@ -66,7 +66,24 @@ export default {
           last_name: '',
           email: '',
           mobile: ''
-        }
+        },
+        billing_contacts: [
+          {
+            id: 1,
+            name: '',
+            email: ''
+          },
+          {
+            id: 2,
+            name: '',
+            email: ''
+          },
+          {
+            id: 3,
+            name: '',
+            email: ''
+          }
+        ]
       }
     }
   },

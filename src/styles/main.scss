@@ -77,6 +77,14 @@ a {
   }
 }
 
+.textarea {
+  @apply .border .rounded .p-2 h-24 w-2/5;
+
+  &:focus {
+    @apply .border-blue;
+  }
+}
+
 .select {
   @apply .inline-block .appearance-none .border .py-2 .px-2 .pr-8 .rounded;
 }

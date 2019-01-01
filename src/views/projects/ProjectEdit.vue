@@ -100,6 +100,7 @@
           <div class="mb-8">
             <router-link :to="{ name: 'projects' }" class="mr-6 text-black hover:text-red">Cancel</router-link>
             <button class="btn-blue btn-big mr-3" @click="updateProject()">Update Project</button>
+            <router-link :to="{ name: 'projectInvoice', params: { id: project['.key'] } }" class="btn-blue btn-big float-right">Invoice Project</router-link>
           </div>
         </div>
       </div>

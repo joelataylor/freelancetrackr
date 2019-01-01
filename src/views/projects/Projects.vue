@@ -30,19 +30,25 @@
         </thead>
         <tbody class="align-baseline">
           <tr class="hover:bg-grey-lightest" v-for="project in projects" :key="project['.key']">
+            <td
+              class="p-2 border-t border-grey-light text-xs whitespace-no-wrap"
+            >{{project.client.name}}</td>
+            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">{{project.name}}</td>
+            <td
+              class="p-2 border-t border-grey-light text-xs whitespace-no-wrap"
+            >{{project.start_date | formatDate}}</td>
+            <td
+              class="p-2 border-t border-grey-light text-xs whitespace-no-wrap"
+            >{{project.total | formatMoney}}</td>
             <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
-              {{project.client.name}}
-            </td>
-            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
-              {{project.name}}
-            </td>
-            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
-              {{project.start_date | formatDate}}
-            </td>
-            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
-              {{project.total | formatMoney}}
-            </td>
-            <td class="p-2 border-t border-grey-light text-xs whitespace-no-wrap">
+              <router-link
+                :to="{ name: 'projectInvoice', params: { id: project['.key'] } }"
+                class="text-grey-dark hover:text-green mr-3"
+              >
+                <span class="inline-block mr-1 text-center">
+                  <font-awesome-icon :icon="invoiceIcon"/>
+                </span> Invoice
+              </router-link>
               <router-link
                 :to="{ name: 'projectEdit', params: { id: project['.key'] } }"
                 class="text-grey-dark hover:text-blue mr-3"
@@ -67,7 +73,12 @@
 <script>
 import { firestore } from '@/firebase'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-import { faPlus, faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons'
+import {
+  faPlus,
+  faPencilAlt,
+  faTrash,
+  faFileInvoiceDollar
+} from '@fortawesome/free-solid-svg-icons'
 
 import Header from '@/components/Header'
 
@@ -84,6 +95,7 @@ export default {
       newIcon: faPlus,
       deleteIcon: faTrash,
       editIcon: faPencilAlt,
+      invoiceIcon: faFileInvoiceDollar,
       loading: true,
       projects: []
     }

@@ -1,25 +1,38 @@
 <template>
-  <p :class="pStyles">
+  <div :class="pStyles">
     <label v-if="$slots.default" class="label">
       <slot/>
     </label>
     {{prefix}}
-    <input
-      type="text"
-      :value="value"
-      @input="$emit('input', $event.target.value)"
-      @keyup.enter="$emit('submit')"
-      :class="iStyles"
-      :placeholder="placeholder"
-    >
+    <div v-if="(type == 'box')" class="flex-1">
+      <textarea
+        type="text"
+        :value="value"
+        @input="$emit('input', $event.target.value)"
+        @keyup.enter="$emit('submit')"
+        :class="iStyles"
+        class="textarea"
+        :placeholder="placeholder"
+      />
+    </div>
+    <div v-else class="flex-1">
+      <input
+        type="text"
+        :value="value"
+        @input="$emit('input', $event.target.value)"
+        @keyup.enter="$emit('submit')"
+        :class="iStyles"
+        :placeholder="placeholder"
+      />
+    </div>
     {{suffix}}
-  </p>
+  </div>
 </template>
 
 <script>
 export default {
   name: 'TextInput',
-  props: ['value', 'size', 'placeholder', 'prefix', 'suffix'],
+  props: ['value', 'size', 'type', 'placeholder', 'prefix', 'suffix'],
   computed: {
     iStyles: function() {
       switch (this.size) {
@@ -30,7 +43,7 @@ export default {
           return 'input'
 
         case 'full':
-          return 'input flex-1'
+          return 'input w-full'
 
         default:
           return 'input'
