@@ -7,6 +7,8 @@ import SignIn from '@/views/SignIn'
 import SignUp from '@/views/SignUp'
 import Dashboard from '@/views/Dashboard'
 
+import AccountEdit from '@/views/account/AccountEdit'
+
 import Projects from '@/views/projects/Projects'
 import ProjectNew from '@/views/projects/ProjectNew'
 import ProjectEdit from '@/views/projects/ProjectEdit'
@@ -46,6 +48,12 @@ const router = new Router({
       path: '/dashboard',
       name: 'dashboard',
       component: Dashboard,
+      meta: { requireBusiness: true }
+    },
+    {
+      path: '/account/edit',
+      name: 'accountEdit',
+      component: AccountEdit,
       meta: { requireBusiness: true }
     },
     {

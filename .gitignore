@@ -3,7 +3,7 @@ node_modules
 /dist
 
 data/*keys.json
-src/config/firebase-config.js
+src/config/*
 
 /tests/e2e/videos/
 /tests/e2e/screenshots/

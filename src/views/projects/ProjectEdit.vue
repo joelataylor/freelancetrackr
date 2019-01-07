@@ -213,12 +213,23 @@ export default {
       return tax > 0
         ? (this.subtotal - discount) * tax
         : this.subtotal - discount
+    },
+    selectedClient() {
+      const client = this.clients.filter(client => {
+        return this.project.client.id == client['.key']
+      })
+      return client[0]
     }
   },
 
   watch: {
     lineItemServiceId: function() {
       this.setLineItemServiceDetails()
+    },
+    selectedClient: function() {
+      if (this.project.client) {
+        this.project.client.name = this.selectedClient.name
+      }
     }
   },
 

@@ -3,7 +3,7 @@
     <label v-if="$slots.default" class="label">
       <slot/>
     </label>
-    {{prefix}}
+    <p v-if="prefix">{{prefix}}</p>
     <div v-if="(type == 'box')" class="flex-1">
       <textarea
         type="text"
@@ -25,7 +25,7 @@
         :placeholder="placeholder"
       />
     </div>
-    {{suffix}}
+    <p v-if="suffix" class="text-sm">{{suffix}}</p>
   </div>
 </template>
 
@@ -51,8 +51,8 @@ export default {
     },
     pStyles: function() {
       return this.$slots.default
-        ? 'flex items-center'
-        : 'flex items-center mr-2'
+        ? 'flex flex-wrap items-center'
+        : 'flex flex-wrap items-center mr-2'
     }
   }
 }

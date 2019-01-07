@@ -19,7 +19,17 @@
       <div class>
         <h3 class="font-semibold border-b mb-4">Details:</h3>
         <div class="mb-8">
-          <text-input v-model="invoice.notes" size="full" type="box" class="mb-2">Notes</text-input>
+          <p class="mb-2">This invoice {{(hasInvoice) ? 'has been' : 'will be'}} sent to:</p>
+          <ul class="mb-2">
+            <li>{{client.contact.first_name}} {{client.contact.last_name}} - {{client.contact.email}}</li>
+          </ul>
+          <ul v-if="client.billing_contacts" class="mb-2">
+            <li v-for="billingContact in billingContacts" :key="billingContact.id">
+              {{billingContact.name}} - {{billingContact.email}}
+            </li>
+          </ul>
+          <checkbox-input v-model="invoice.resend_invoice" v-if="hasInvoice" name="resendInvoice" class="mb-2">Resend Invoice</checkbox-input>
+          <text-input v-model="invoice.notes" size="full" type="box" class="mb-2" suffix="Will be included on the invoice">Notes</text-input>
           <date-input v-model="invoice.bill_date" class="mb-2">Bill Date</date-input>
           <date-input v-model="invoice.due_date" class="mb-2">Due Date</date-input>
           <date-input v-model="invoice.received_date" class="mb-2">Received Date</date-input>
@@ -28,7 +38,7 @@
         <div class="mb-8">
           <div v-if="hasInvoice">
             <button class="mr-6 text-red hover:text-black" @click="deleteInvoice()">Delete</button>
-            <button class="btn-blue btn-big mr-3" @click="saveInvoice()">Save Invoice</button>
+            <button class="btn-blue btn-big mr-3" @click="updateInvoice()">Update Invoice</button>
           </div>
           <div v-else>
             <router-link :to="{ name: 'projects' }" class="mr-6 text-black hover:text-red">Cancel</router-link>
@@ -46,6 +56,7 @@ import { firestore } from '@/firebase'
 import Header from '@/components/Header'
 import TextInput from '@/components/TextInput'
 import DateInput from '@/components/DateInput'
+import CheckboxInput from '@/components/CheckboxInput'
 
 export default {
   name: 'ProjectInvoice',
@@ -56,12 +67,14 @@ export default {
       project: {},
       client: {},
       invoice: {
+        emailTo: [],
         notes: '',
         bill_date: new Date(),
         due_date: moment()
           .add(14, 'd')
           .toDate(),
-        received_date: null
+        received_date: null,
+        resend_invoice: false
       }
     }
   },
@@ -69,7 +82,8 @@ export default {
   components: {
     Header,
     TextInput,
-    DateInput
+    DateInput,
+    CheckboxInput
   },
 
   firestore() {
@@ -83,7 +97,8 @@ export default {
         resolve: () => {
           this.loadClient()
           if (this.project.invoice) {
-            this.invoice = this.project.invoice
+            delete this.project.invoice.resend_invoice
+            this.invoice = { ...this.invoice, ...this.project.invoice }
           }
         },
         reject: err => {
@@ -102,14 +117,23 @@ export default {
     },
     hasInvoice() {
       return !!this.project.invoice.bill_date
+    },
+    billingContacts() {
+      return this.client.billing_contacts.filter(contact => {
+        return contact.email
+      })
     }
   },
 
   methods: {
     createInvoice: function() {
-      const invoice = this.invoice
-      this.$firestore.project.update({ invoice: invoice }).then(() => {
+      this.$firestore.project.update({ invoice: this.invoice }).then(() => {
         this.$toaster.success('An invoice has been created for this project!')
+      })
+    },
+    updateInvoice: function() {
+      this.$firestore.project.update({ invoice: this.invoice }).then(() => {
+        this.$toaster.success('Your invoice has been updated')
       })
     },
     loadClient() {

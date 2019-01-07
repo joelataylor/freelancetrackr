@@ -17,9 +17,9 @@
         <transition enter-active-class="fadeInDown" leave-active-class="fadeOutUp">
           <div class="absolute pin-r w-48 mt-3" v-show="open">
             <div class="bg-black shadow overflow-hidden">
-              <a href="#" class="no-underline block py-3 text-sm text-grey border-b border-grey-darker hover:text-white hover:bg-blacker">
-                <span class="inline-block w-6 ml-4 mr-2 text-center"><font-awesome-icon :icon="dashboardIcon" /></span> Profile
-              </a>
+              <router-link :to="{ name: 'accountEdit' }" class="no-underline block py-3 text-sm text-grey border-b border-grey-darker hover:text-white hover:bg-blacker">
+                <span class="inline-block w-6 ml-4 mr-2 text-center"><font-awesome-icon :icon="dashboardIcon" /></span> Account
+              </router-link>
               <a href="#" @click="logout" class="no-underline block py-3 text-sm text-grey border-b border-black hover:text-white hover:bg-blacker">
                 <span class="inline-block w-6 ml-4 mr-2 text-center"><font-awesome-icon :icon="signOutIcon" /></span> Sign Out
               </a>

@@ -13,4 +13,7 @@ Vue.use(VueFirestore)
 const firestore = firebase.firestore()
 firestore.settings({ timestampsInSnapshots: true })
 
-export { firestore }
+// Initialize Cloud Functions through Firebase
+const functions = firebase.functions()
+
+export { firestore, functions }
